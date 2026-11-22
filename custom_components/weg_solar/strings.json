@@ -1,0 +1,104 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "WEG Solar Portal",
+        "description": "Enter the API credentials generated in the WEG Solar Portal under 'API Management' (Gestão de API). Each plant is added as a separate entry.",
+        "data": {
+          "api_key": "API Key",
+          "api_secret": "API Secret"
+        },
+        "data_description": {
+          "api_key": "The API Key generated in the WEG Solar Portal API Management section.",
+          "api_secret": "The API Secret shown when the key was created (displayed only once)."
+        }
+      },
+      "plant": {
+        "title": "Select plant",
+        "description": "Choose the plant to add. The other plants linked to this key can be added later; they will also show up as discovered.",
+        "data": {
+          "plant_id": "Plant"
+        },
+        "data_description": {
+          "plant_id": "Plant linked to this API key."
+        }
+      },
+      "discovery_confirm": {
+        "title": "WEG Solar plant discovered",
+        "description": "Do you want to add the plant **{name}** using the API key already configured?"
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate WEG Solar Portal",
+        "description": "The API credentials for {name} are no longer valid. Enter new credentials.",
+        "data": {
+          "api_key": "API Key",
+          "api_secret": "API Secret"
+        },
+        "data_description": {
+          "api_key": "The API Key generated in the WEG Solar Portal API Management section.",
+          "api_secret": "The API Secret shown when the key was created."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the WEG Solar Portal API.",
+      "invalid_auth": "Invalid API Key or API Secret.",
+      "rate_limited": "WEG Solar Portal API rate limit exceeded. Wait a few minutes and try again.",
+      "plant_not_linked": "This API key does not have access to this plant.",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "All plants of this API key are already configured.",
+      "no_plants": "No plants are linked to this API key.",
+      "reauth_successful": "Re-authentication was successful."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_power": {
+        "name": "Power"
+      },
+      "today_energy": {
+        "name": "Energy today"
+      },
+      "lifetime_energy": {
+        "name": "Lifetime energy"
+      },
+      "inverters_online": {
+        "name": "Inverters online"
+      },
+      "alarms_24h": {
+        "name": "Alarms (24h)"
+      },
+      "last_alarm": {
+        "name": "Last alarm"
+      },
+      "device_status": {
+        "name": "Status"
+      },
+      "serial_number": {
+        "name": "Serial number"
+      },
+      "model": {
+        "name": "Model"
+      }
+    },
+    "binary_sensor": {
+      "device_online": {
+        "name": "Online"
+      },
+      "has_alarms": {
+        "name": "Alarm"
+      },
+      "all_inverters_online": {
+        "name": "All inverters online"
+      }
+    },
+    "button": {
+      "scan_devices": {
+        "name": "Scan for plants and inverters"
+      }
+    }
+  }
+}

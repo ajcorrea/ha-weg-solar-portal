@@ -1,0 +1,17 @@
+{
+  "domain": "weg_solar",
+  "name": "WEG Solar Portal",
+  "categories": [
+    "energy.solar_batteries"
+  ],
+  "codeowners": [
+    "@ajcorrea"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/ajcorrea/ha-weg-solar-portal",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/ajcorrea/ha-weg-solar-portal/issues",
+  "requirements": [],
+  "version": "2.1.0"
+}

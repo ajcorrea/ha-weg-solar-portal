@@ -1,0 +1,104 @@
+{
+  "config": {
+    "flow_title": "{name}",
+    "step": {
+      "user": {
+        "title": "WEG Solar Portal",
+        "description": "Insira as credenciais geradas no WEG Solar Portal em 'Gestão de API'. Cada planta é adicionada como uma entrada separada.",
+        "data": {
+          "api_key": "Chave de API (API Key)",
+          "api_secret": "Segredo da API (API Secret)"
+        },
+        "data_description": {
+          "api_key": "A chave gerada na seção Gestão de API do WEG Solar Portal.",
+          "api_secret": "O segredo exibido ao criar a chave (mostrado apenas uma vez)."
+        }
+      },
+      "plant": {
+        "title": "Selecionar planta",
+        "description": "Escolha a planta a adicionar. As demais plantas desta chave podem ser adicionadas depois e também aparecerão como descobertas.",
+        "data": {
+          "plant_id": "Planta"
+        },
+        "data_description": {
+          "plant_id": "Planta vinculada a esta chave de API."
+        }
+      },
+      "discovery_confirm": {
+        "title": "Planta WEG Solar descoberta",
+        "description": "Deseja adicionar a planta **{name}** usando a chave de API já configurada?"
+      },
+      "reauth_confirm": {
+        "title": "Reautenticar WEG Solar Portal",
+        "description": "As credenciais de {name} não são mais válidas. Insira novas credenciais.",
+        "data": {
+          "api_key": "Chave de API (API Key)",
+          "api_secret": "Segredo da API (API Secret)"
+        },
+        "data_description": {
+          "api_key": "A chave gerada na seção Gestão de API do WEG Solar Portal.",
+          "api_secret": "O segredo exibido ao criar a chave."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Falha ao conectar à API do WEG Solar Portal.",
+      "invalid_auth": "Chave de API ou segredo inválido.",
+      "rate_limited": "Limite de requisições da API do WEG Solar Portal excedido. Aguarde alguns minutos e tente novamente.",
+      "plant_not_linked": "Esta chave de API não tem acesso a esta planta.",
+      "unknown": "Ocorreu um erro inesperado."
+    },
+    "abort": {
+      "already_configured": "Todas as plantas desta chave de API já estão configuradas.",
+      "no_plants": "Nenhuma planta está vinculada a esta chave de API.",
+      "reauth_successful": "Reautenticação realizada com sucesso."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_power": {
+        "name": "Potência"
+      },
+      "today_energy": {
+        "name": "Energia hoje"
+      },
+      "lifetime_energy": {
+        "name": "Energia total"
+      },
+      "inverters_online": {
+        "name": "Inversores online"
+      },
+      "alarms_24h": {
+        "name": "Alarmes (24h)"
+      },
+      "last_alarm": {
+        "name": "Último alarme"
+      },
+      "device_status": {
+        "name": "Status"
+      },
+      "serial_number": {
+        "name": "Número de série"
+      },
+      "model": {
+        "name": "Modelo"
+      }
+    },
+    "binary_sensor": {
+      "device_online": {
+        "name": "Online"
+      },
+      "has_alarms": {
+        "name": "Alarme"
+      },
+      "all_inverters_online": {
+        "name": "Todos os inversores online"
+      }
+    },
+    "button": {
+      "scan_devices": {
+        "name": "Verificar novas usinas e inversores"
+      }
+    }
+  }
+}
