@@ -41,6 +41,11 @@ _ENERGY_RE = re.compile(r"^\s*([-+]?[\d.,]+)\s*([kMGm]?Wh)\s*$", re.IGNORECASE)
 class WegSolarApiError(Exception):
     """Base exception for WEG Solar API errors."""
 
+    def __init__(self, message: str, *, status: int | None = None) -> None:
+        """Initialize with optional HTTP status code."""
+        super().__init__(message)
+        self.status = status
+
 
 class WegSolarRateLimitError(WegSolarApiError):
     """Rate limit exceeded error."""
@@ -70,9 +75,13 @@ class RateLimiter:
     async def __aenter__(self) -> None:
         """Wait for our turn."""
         await self._lock.acquire()
-        wait = self._last + self._min_interval - time.monotonic()
-        if wait > 0:
-            await asyncio.sleep(wait)
+        try:
+            wait = self._last + self._min_interval - time.monotonic()
+            if wait > 0:
+                await asyncio.sleep(wait)
+        except BaseException:
+            self._lock.release()
+            raise
 
     async def __aexit__(self, *exc: object) -> None:
         """Release the slot."""
@@ -170,7 +179,8 @@ class WegSolarApiClient:
                     ) as response:
                         if response.status in (401, 403):
                             raise WegSolarAuthError(
-                                f"Authentication failed ({response.status})"
+                                f"Authentication failed ({response.status})",
+                                status=response.status,
                             )
                         if response.status == 429:
                             retry_after = response.headers.get("Retry-After")
@@ -180,10 +190,17 @@ class WegSolarApiClient:
                                 delay = None
                             if delay is None:
                                 delay = RETRY_BASE_DELAY * (2**attempt)
+                        elif response.status >= 500:
+                            text = await response.text()
+                            raise WegSolarConnectionError(
+                                f"Server error {response.status} on {endpoint}: {text}",
+                                status=response.status,
+                            )
                         elif response.status != 200:
                             text = await response.text()
                             raise WegSolarApiError(
-                                f"API error {response.status} on {endpoint}: {text}"
+                                f"API error {response.status} on {endpoint}: {text}",
+                                status=response.status,
                             )
                         else:
                             return await response.json()

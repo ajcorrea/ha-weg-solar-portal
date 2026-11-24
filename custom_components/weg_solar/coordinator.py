@@ -127,13 +127,23 @@ class WegSolarCoordinator(DataUpdateCoordinator[PlantData]):
             return await func(self.plant_id, *args, device_id=ident)
 
         candidates = [c for c in (inverter.device_id, inverter.serial_number) if c]
+        if not candidates:
+            return None
+
         for ident in candidates:
             try:
                 result = await func(self.plant_id, *args, device_id=ident)
             except (WegSolarAuthError, *_TRANSIENT):
                 raise
             except WegSolarApiError as err:
-                _LOGGER.debug("Measurement with deviceId=%s failed: %s", ident, err)
+                if err.status is None or not (400 <= err.status < 500):
+                    raise
+                _LOGGER.debug(
+                    "Measurement with deviceId=%s rejected (%s): %s",
+                    ident,
+                    err.status,
+                    err,
+                )
                 continue
             self._measure_id[dev_id] = ident
             return result
